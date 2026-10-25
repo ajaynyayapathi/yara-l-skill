@@ -1,0 +1,51 @@
+// Shape: multi event sequence with threshold
+// Logic: Alert when one user has 10 or more failed logins followed by a successful login within 30 minutes.
+//
+// Should fire:   12 failed logins for jdoe from 198.51.100.7, then 1 success for jdoe, all within 20 minutes.
+// Should not:    3 failed logins for jdoe, then a success (normal typo pattern).
+// Should not:    12 failed logins for jdoe with no success (covered by a separate spray rule).
+
+rule user_login_bruteforce_then_success {
+
+  meta:
+    author = "community"
+    description = "Ten or more failed logins for one account followed by a successful login inside 30 minutes. Indicates a guessed or sprayed password."
+    severity = "HIGH"
+    priority = "HIGH"
+    mitre_attack_tactic = "Credential Access"
+    mitre_attack_technique = "T1110"
+    reference = "https://attack.mitre.org/techniques/T1110/"
+    false_positives = "Mobile mail clients retrying an expired password, then the user updating it."
+    rule_version = "1.0"
+    yara_version = "YL2.0"
+
+  events:
+    $fail.metadata.event_type = "USER_LOGIN"
+    // VERIFY: some parsers write FAIL instead of BLOCK for failed logins.
+    $fail.security_result.action = "BLOCK"
+    $fail.target.user.userid = $user
+
+    $success.metadata.event_type = "USER_LOGIN"
+    $success.security_result.action = "ALLOW"
+    $success.target.user.userid = $user
+
+    // The success must come after the failures.
+    $fail.metadata.event_timestamp.seconds < $success.metadata.event_timestamp.seconds
+
+    // Tuning hook: service accounts with known retry storms.
+    not $user in %bruteforce_excluded_accounts
+
+  match:
+    $user over 30m
+
+  outcome:
+    $risk_score = 80
+    $failed_count = count_distinct($fail.metadata.id)
+    $fail_source_ips = array_distinct($fail.principal.ip)
+    $success_source_ips = array_distinct($success.principal.ip)
+    $first_fail_time = min($fail.metadata.event_timestamp.seconds)
+    $success_time = max($success.metadata.event_timestamp.seconds)
+
+  condition:
+    #fail >= 10 and $success
+}

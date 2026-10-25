@@ -1,0 +1,50 @@
+// Shape: single event with data table exclusion, grouped to reduce duplicate alerts
+// Logic: Alert when a user completes a successful sign in using the OAuth device code flow
+//        and is not on the approved device code users table.
+//
+// Should fire:   jdoe signs in with authenticationProtocol=deviceCode from 192.0.2.44, jdoe not in table.
+// Should not:    conf-room-07 signs in with deviceCode and is listed in the table.
+//
+// Data table:    device_code_approved_users
+//   columns:     userid (string), owner (string), reason (string)
+//   example row: conf-room-07@example.com, it-collab-team, Teams Room device
+
+rule entra_device_code_signin_unapproved_user {
+
+  meta:
+    author = "community"
+    description = "Successful OAuth device code sign in by an account not approved for device code flow. Device code phishing lets an attacker obtain tokens after the victim enters a code on the real Microsoft login page."
+    severity = "HIGH"
+    priority = "HIGH"
+    mitre_attack_tactic = "Credential Access"
+    mitre_attack_technique = "T1528"
+    reference = "https://attack.mitre.org/techniques/T1528/"
+    false_positives = "Azure CLI and PowerShell logins with --use-device-code, conference room and IoT devices."
+    rule_version = "1.0"
+    yara_version = "YL2.0"
+
+  events:
+    $e.metadata.event_type = "USER_LOGIN"
+    // VERIFY: confirm log_type for your Entra ID sign in feed.
+    $e.metadata.log_type = "AZURE_AD"
+    // VERIFY: the field holding authenticationProtocol differs by parser version.
+    $e.additional.fields["authenticationProtocol"] = "deviceCode" nocase
+    $e.security_result.action = "ALLOW"
+    $e.target.user.userid = $user
+    // Tuning hook: column based lookup against the approved users table.
+    not $e.target.user.userid in %device_code_approved_users.userid
+
+  match:
+    $user over 1h
+
+  outcome:
+    $risk_score = 75
+    $risk_entity_to_score = $user
+    $signin_count = count($e.metadata.id)
+    $source_ips = array_distinct($e.principal.ip)
+    $applications = array_distinct($e.target.application)
+    $countries = array_distinct($e.principal.location.country_or_region)
+
+  condition:
+    $e
+}

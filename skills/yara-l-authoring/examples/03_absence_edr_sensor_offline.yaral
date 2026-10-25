@@ -1,0 +1,51 @@
+// Shape: absence
+// Logic: Alert when an EDR sensor reports it stopped on a host and no start event follows within 30 minutes.
+//
+// Should fire:   "sensor stopped" on WS-1042 at 14:00, nothing else from WS-1042 by 14:30.
+// Should not:    "sensor stopped" on WS-1042 at 14:00, "sensor started" at 14:04 (reboot or upgrade).
+//
+// Note: absence rules fire only after the match window closes, so expect alerts about 30 minutes late.
+
+rule edr_sensor_stopped_no_recovery {
+
+  meta:
+    author = "community"
+    description = "EDR sensor stopped and did not restart within 30 minutes. Attackers stop or uninstall security agents before acting."
+    severity = "MEDIUM"
+    priority = "HIGH"
+    mitre_attack_tactic = "Defense Evasion"
+    mitre_attack_technique = "T1562.001"
+    reference = "https://attack.mitre.org/techniques/T1562/001/"
+    false_positives = "Hosts powered off or decommissioned right after a clean shutdown."
+    rule_version = "1.0"
+    yara_version = "YL2.0"
+
+  events:
+    $stop.metadata.event_type = "STATUS_UPDATE"
+    // VERIFY: product_name and product_event_type values depend on your EDR parser.
+    $stop.metadata.product_name = "REPLACE_WITH_EDR_PRODUCT"
+    re.regex($stop.metadata.product_event_type, `(?i)(sensor|agent).*(stop|offline|uninstall)`)
+    $stop.principal.hostname = $host
+
+    $start.metadata.event_type = "STATUS_UPDATE"
+    $start.metadata.product_name = "REPLACE_WITH_EDR_PRODUCT"
+    re.regex($start.metadata.product_event_type, `(?i)(sensor|agent).*(start|online|heartbeat)`)
+    $start.principal.hostname = $host
+
+    $stop.metadata.event_timestamp.seconds < $start.metadata.event_timestamp.seconds
+
+    // Tuning hook: hosts scheduled for decommission.
+    not $host in %decommissioned_hosts
+
+  match:
+    $host over 30m
+
+  outcome:
+    $risk_score = 60
+    $risk_entity_to_score = $host
+    $stop_events = array_distinct($stop.metadata.product_event_type)
+    $stop_time = min($stop.metadata.event_timestamp.seconds)
+
+  condition:
+    $stop and !$start
+}
