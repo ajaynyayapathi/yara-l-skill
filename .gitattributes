@@ -1,0 +1,5 @@
+# Highlight YARA-L rules on GitHub. Linguist has no YARA-L grammar, so use YARA's.
+*.yaral linguist-language=YARA
+
+# Normalize line endings so rules paste cleanly into the SecOps Rules Editor.
+* text=auto eol=lf
