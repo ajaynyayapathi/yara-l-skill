@@ -1,0 +1,575 @@
+{
+  "description": "12 failed logins for one user from one IP, then a success, inside 13 minutes.",
+  "log_type": "OKTA",
+  "parser": {
+    "name": "OKTA",
+    "version": "unknown"
+  },
+  "rule": "user_login_bruteforce_then_success",
+  "expect": "fire",
+  "verified_against_tenant": false,
+  "notes": "Synthetic event built from public schema docs. Not yet confirmed against a live parser. Okta FAILURE is assumed to map to BLOCK; confirm.",
+  "raw_logs": [
+    {
+      "uuid": "00000000-0000-0000-0000-000000000100",
+      "published": "2026-10-22T03:10:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000101",
+      "published": "2026-10-22T03:11:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000102",
+      "published": "2026-10-22T03:12:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000103",
+      "published": "2026-10-22T03:13:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000104",
+      "published": "2026-10-22T03:14:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000105",
+      "published": "2026-10-22T03:15:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000106",
+      "published": "2026-10-22T03:16:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000107",
+      "published": "2026-10-22T03:17:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000108",
+      "published": "2026-10-22T03:18:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000109",
+      "published": "2026-10-22T03:19:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000110",
+      "published": "2026-10-22T03:20:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000111",
+      "published": "2026-10-22T03:21:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000112",
+      "published": "2026-10-22T03:22:30Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "SUCCESS",
+        "reason": null
+      }
+    }
+  ],
+  "udm_events": [
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:10:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-100"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:11:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-101"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:12:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-102"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:13:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-103"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:14:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-104"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:15:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-105"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:16:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-106"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:17:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-107"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:18:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-108"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:19:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-109"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:20:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-110"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:21:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-111"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:22:30Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-112"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "ALLOW"
+          ]
+        }
+      ]
+    }
+  ]
+}

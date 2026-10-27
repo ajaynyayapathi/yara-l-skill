@@ -1,0 +1,72 @@
+{
+  "description": "Regular user completes a device code sign in. Mirrors a Storm-2372 style phishing outcome.",
+  "log_type": "AZURE_AD",
+  "parser": {
+    "name": "AZURE_AD",
+    "version": "unknown"
+  },
+  "rule": "entra_device_code_signin_unapproved_user",
+  "expect": "fire",
+  "verified_against_tenant": false,
+  "notes": "Synthetic event built from public schema docs. Not yet confirmed against a live parser.",
+  "raw_logs": [
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "createdDateTime": "2026-10-20T14:02:11Z",
+      "userPrincipalName": "jdoe@example.com",
+      "userId": "00000000-0000-0000-0000-000000000101",
+      "appDisplayName": "Microsoft Office",
+      "appId": "00000000-0000-0000-0000-000000000201",
+      "ipAddress": "203.0.113.44",
+      "authenticationProtocol": "deviceCode",
+      "status": {
+        "errorCode": 0
+      },
+      "location": {
+        "countryOrRegion": "US"
+      },
+      "tenantId": "00000000-0000-0000-0000-000000000001"
+    }
+  ],
+  "udm_events": [
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-20T14:02:11Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "AZURE_AD",
+        "product_name": "Azure AD",
+        "vendor_name": "Microsoft",
+        "id": "fixture-1"
+      },
+      "principal": {
+        "ip": [
+          "203.0.113.44"
+        ],
+        "location": {
+          "country_or_region": "US"
+        }
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com",
+          "email_addresses": [
+            "jdoe@example.com"
+          ]
+        },
+        "application": "Microsoft Office"
+      },
+      "security_result": [
+        {
+          "action": [
+            "ALLOW"
+          ]
+        }
+      ],
+      "additional": {
+        "fields": {
+          "authenticationProtocol": "deviceCode"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+name: checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint-and-fixtures:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: skills/yara-l-authoring
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Lint rules
+        run: python3 scripts/lint_rule.py $(ls examples/*.yaral rules/*.yaral 2>/dev/null)
+      - name: Check fixtures
+        run: python3 scripts/check_fixtures.py

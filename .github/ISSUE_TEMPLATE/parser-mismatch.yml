@@ -1,0 +1,75 @@
+name: Parser mismatch
+description: Your SecOps parser maps a field or value differently than a rule or the field notes assume.
+title: "[parser] <LOG_TYPE>: <field> "
+labels: ["parser-mismatch"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Sanitize everything before you paste it: use 203.0.113.x for IPs, name@example.com for emails, 00000000-0000-0000-0000-000000000001 for GUIDs, and placeholder hostnames. Remove tokens and secrets entirely.
+  - type: input
+    id: log_type
+    attributes:
+      label: Log type
+      description: The ingestion label, as in metadata.log_type
+      placeholder: OKTA
+    validations:
+      required: true
+  - type: input
+    id: parser_version
+    attributes:
+      label: Parser version or date
+      description: Parser version if you know it, otherwise the date you pulled the event
+      placeholder: "2026-10-27"
+    validations:
+      required: true
+  - type: input
+    id: rule
+    attributes:
+      label: Affected rule or file
+      placeholder: user_login_bruteforce_then_success, or references/udm-fields.md
+    validations:
+      required: true
+  - type: input
+    id: field
+    attributes:
+      label: UDM field
+      placeholder: security_result.action
+    validations:
+      required: true
+  - type: input
+    id: expected
+    attributes:
+      label: What the rule or notes expect
+      placeholder: BLOCK
+    validations:
+      required: true
+  - type: input
+    id: actual
+    attributes:
+      label: What your parser produces
+      placeholder: FAIL
+    validations:
+      required: true
+  - type: textarea
+    id: udm
+    attributes:
+      label: Sanitized UDM event
+      description: The UDM view of one event. JSON preferred.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: raw
+    attributes:
+      label: Sanitized raw log (optional)
+      render: json
+  - type: checkboxes
+    id: sanitized
+    attributes:
+      label: Sanitization
+      options:
+        - label: I removed or replaced IPs, emails, GUIDs, hostnames, usernames, company names, and secrets
+          required: true
+        - label: I'm allowed to share this data
+          required: true

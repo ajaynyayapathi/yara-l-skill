@@ -1,0 +1,23 @@
+{
+  "description": "One sentence: what happened in this event.",
+  "log_type": "LOG_TYPE_INGESTION_LABEL",
+  "parser": {
+    "name": "LOG_TYPE_INGESTION_LABEL",
+    "version": "parser version or date you exported it"
+  },
+  "rule": "rule_name_from_examples_or_rules",
+  "expect": "fire",
+  "relies_on_exclusion": "Only for no_fire cases suppressed by a list, data table, or match window. Delete otherwise.",
+  "verified_against_tenant": true,
+  "notes": "Anything a reviewer should know: parser quirks, fields you renamed, fields you removed.",
+  "raw_logs": [
+    {
+      "paste": "the sanitized raw log, as JSON or as a string"
+    }
+  ],
+  "udm_events": [
+    {
+      "paste": "the UDM event SecOps produced from that raw log"
+    }
+  ]
+}

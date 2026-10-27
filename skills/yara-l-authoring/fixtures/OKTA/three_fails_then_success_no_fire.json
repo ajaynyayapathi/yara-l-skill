@@ -1,0 +1,188 @@
+{
+  "description": "Three typos, then a correct password. Normal user behavior.",
+  "log_type": "OKTA",
+  "parser": {
+    "name": "OKTA",
+    "version": "unknown"
+  },
+  "rule": "user_login_bruteforce_then_success",
+  "expect": "no_fire",
+  "verified_against_tenant": false,
+  "notes": "Synthetic event built from public schema docs. Not yet confirmed against a live parser.",
+  "raw_logs": [
+    {
+      "uuid": "00000000-0000-0000-0000-000000000200",
+      "published": "2026-10-22T03:10:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000201",
+      "published": "2026-10-22T03:11:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000202",
+      "published": "2026-10-22T03:12:00Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "FAILURE",
+        "reason": "INVALID_CREDENTIALS"
+      }
+    },
+    {
+      "uuid": "00000000-0000-0000-0000-000000000203",
+      "published": "2026-10-22T03:13:30Z",
+      "eventType": "user.session.start",
+      "actor": {
+        "alternateId": "jdoe@example.com",
+        "type": "User"
+      },
+      "client": {
+        "ipAddress": "198.51.100.7"
+      },
+      "outcome": {
+        "result": "SUCCESS",
+        "reason": null
+      }
+    }
+  ],
+  "udm_events": [
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:10:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-200"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:11:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-201"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:12:00Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-202"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "BLOCK"
+          ]
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-22T03:13:30Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "OKTA",
+        "product_event_type": "user.session.start",
+        "product_name": "Okta",
+        "id": "fixture-203"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.7"
+        ]
+      },
+      "target": {
+        "user": {
+          "userid": "jdoe@example.com"
+        }
+      },
+      "security_result": [
+        {
+          "action": [
+            "ALLOW"
+          ]
+        }
+      ]
+    }
+  ]
+}

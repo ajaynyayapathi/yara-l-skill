@@ -1,0 +1,55 @@
+{
+  "description": "certutil used to hash a local file. Benign.",
+  "log_type": "WINDOWS_SYSMON",
+  "parser": {
+    "name": "WINDOWS_SYSMON",
+    "version": "unknown"
+  },
+  "rule": "win_certutil_remote_download",
+  "expect": "no_fire",
+  "verified_against_tenant": false,
+  "notes": "Synthetic event built from public schema docs. Not yet confirmed against a live parser.",
+  "raw_logs": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-10-21T16:50:40Z",
+      "Computer": "ws-0001.corp.example.com",
+      "User": "EXAMPLE\\jdoe",
+      "Image": "C:\\Windows\\System32\\certutil.exe",
+      "CommandLine": "certutil.exe -hashfile C:\\temp\\installer.msi SHA256",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "ProcessGuid": "{00000000-0000-0000-0000-000000000011}"
+    }
+  ],
+  "udm_events": [
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-21T16:50:40Z",
+        "event_type": "PROCESS_LAUNCH",
+        "log_type": "WINDOWS_SYSMON",
+        "product_event_type": "1",
+        "product_name": "Microsoft-Windows-Sysmon",
+        "id": "fixture-11"
+      },
+      "principal": {
+        "hostname": "ws-0001.corp.example.com",
+        "user": {
+          "userid": "jdoe"
+        },
+        "process": {
+          "file": {
+            "full_path": "C:\\Windows\\System32\\cmd.exe"
+          }
+        }
+      },
+      "target": {
+        "process": {
+          "file": {
+            "full_path": "C:\\Windows\\System32\\certutil.exe"
+          },
+          "command_line": "certutil.exe -hashfile C:\\temp\\installer.msi SHA256"
+        }
+      }
+    }
+  ]
+}

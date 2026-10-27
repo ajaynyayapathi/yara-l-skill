@@ -57,8 +57,14 @@ skills/yara-l-authoring/
     02_sequence_bruteforce_then_success.yaral
     03_absence_edr_sensor_offline.yaral
     04_data_table_device_code_signin.yaral
+  rules/                       Community contributed rules
+  fixtures/
+    _template.json             Copy this to add a test case
+    AZURE_AD/ OKTA/ WINDOWS_SYSMON/
+                               Sanitized events + parser UDM output, per log type
   scripts/
     lint_rule.py               Offline structural linter (Python 3, no dependencies)
+    check_fixtures.py          Checks rules against parser fixtures
 ```
 
 ## Linter
@@ -80,15 +86,35 @@ It checks:
 
 A clean lint result does not mean the rule compiles. Always validate in the SecOps Rules Editor or through the SecOps API before enabling a rule.
 
+## Parser fixtures
+
+Valid syntax and a rule that fires are two different things. A rule can pass the linter and still never fire because your parser writes `FAIL` where the rule expects `BLOCK`.
+
+Fixtures close that gap. Each one is a sanitized raw log, the UDM event a specific parser produced from it, and the rule that should or should not fire.
+
+```bash
+python3 skills/yara-l-authoring/scripts/check_fixtures.py
+```
+
+```
+[FAIL] fixtures/OKTA/bruteforce_then_success_fire.json
+  error:   $fail: 0 event(s) match its conditions, rule needs #fail >= 10
+  error:     security_result.action: rule wants = 'BLOCK', fixture has ['ALLOW', 'FAIL']
+```
+
+The checker confirms every field the rule uses exists in the fixture, compares literal values and regex conditions, checks `#var` thresholds, and rejects fixtures with public IPs, real email domains, or real GUIDs.
+
+The fixtures in this first release are synthetic and marked `verified_against_tenant: false`. Real events from your tenant are the most valuable thing you can contribute. See [fixtures/README.md](skills/yara-l-authoring/fixtures/README.md).
+
 ## Limits
 
-1. UDM field population varies by parser. Rules mark uncertain fields with `// VERIFY:`.
+1. UDM field population varies by parser. Rules mark uncertain fields with `// VERIFY:`, and fixtures show what specific parsers emit.
 2. Example rules use placeholder product names and table names. Replace them before you deploy.
 3. New rules should run with alerting off for 7 days while you review detection volume.
 
 ## Contributing
 
-Pull requests welcome for new example rules, UDM field corrections, and linter checks. Each new example needs a should fire and a should not fire case in its header comment and must pass the linter.
+The most useful contributions are parser fixtures from real tenants and parser mismatch reports. See [CONTRIBUTING.md](CONTRIBUTING.md), or open a "Parser mismatch" issue if you don't have time for a PR.
 
 ## License
 

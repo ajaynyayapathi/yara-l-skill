@@ -1,0 +1,73 @@
+{
+  "description": "Conference room device signs in with device code. Listed in the approved users table.",
+  "log_type": "AZURE_AD",
+  "parser": {
+    "name": "AZURE_AD",
+    "version": "unknown"
+  },
+  "rule": "entra_device_code_signin_unapproved_user",
+  "expect": "no_fire",
+  "relies_on_exclusion": "%device_code_approved_users (row: conf-room-07@example.com)",
+  "verified_against_tenant": false,
+  "notes": "Synthetic event built from public schema docs. Not yet confirmed against a live parser.",
+  "raw_logs": [
+    {
+      "id": "00000000-0000-0000-0000-000000000002",
+      "createdDateTime": "2026-10-20T09:00:03Z",
+      "userPrincipalName": "conf-room-07@example.com",
+      "userId": "00000000-0000-0000-0000-000000000102",
+      "appDisplayName": "Microsoft Office",
+      "appId": "00000000-0000-0000-0000-000000000202",
+      "ipAddress": "198.51.100.12",
+      "authenticationProtocol": "deviceCode",
+      "status": {
+        "errorCode": 0
+      },
+      "location": {
+        "countryOrRegion": "US"
+      },
+      "tenantId": "00000000-0000-0000-0000-000000000001"
+    }
+  ],
+  "udm_events": [
+    {
+      "metadata": {
+        "event_timestamp": "2026-10-20T09:00:03Z",
+        "event_type": "USER_LOGIN",
+        "log_type": "AZURE_AD",
+        "product_name": "Azure AD",
+        "vendor_name": "Microsoft",
+        "id": "fixture-2"
+      },
+      "principal": {
+        "ip": [
+          "198.51.100.12"
+        ],
+        "location": {
+          "country_or_region": "US"
+        }
+      },
+      "target": {
+        "user": {
+          "userid": "conf-room-07@example.com",
+          "email_addresses": [
+            "conf-room-07@example.com"
+          ]
+        },
+        "application": "Microsoft Office"
+      },
+      "security_result": [
+        {
+          "action": [
+            "ALLOW"
+          ]
+        }
+      ],
+      "additional": {
+        "fields": {
+          "authenticationProtocol": "deviceCode"
+        }
+      }
+    }
+  ]
+}

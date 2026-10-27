@@ -22,6 +22,8 @@ Ask in one message for anything missing that changes the rule. Do not ask for th
 
 If the user gives a raw log sample, read the field names from it instead of guessing.
 
+If `fixtures/<LOG_TYPE>/` exists for the user's log source, read its UDM events before writing the rule. Prefer fixtures with `verified_against_tenant: true`. They show which fields that parser fills and which values it writes (e.g. `FAIL` vs `BLOCK`). Treat synthetic fixtures as hints, not proof.
+
 ## Workflow
 
 1. **Restate the detection logic in one sentence.** Example: "Alert when one user has 10 or more failed logins followed by a success within 30 minutes."
@@ -34,7 +36,7 @@ If the user gives a raw log sample, read the field names from it instead of gues
 4. **Write the rule** in the section order: `meta`, `events`, `match`, `outcome`, `condition`, `options`.
 5. **Add tuning hooks.** Put exclusions in a reference list or data table, never as hardcoded values the SOC will edit weekly.
 6. **Write test cases.** At least one event set that must fire and one that must not.
-7. **Lint the rule.** If you can run code, save the rule to a `.yaral` file and run `python3 scripts/lint_rule.py <file>`. Fix every error. Carry the warnings into your output.
+7. **Lint the rule.** If you can run code, save the rule to a `.yaral` file and run `python3 scripts/lint_rule.py <file>`. Fix every error. Carry the warnings into your output. If the user gave you a sample event, also write it as a fixture (see `fixtures/README.md`) and run `python3 scripts/check_fixtures.py <fixture>` to confirm the rule's fields and values line up with that event.
 8. **Run the review checklist** in `references/tuning-checklist.md` against your own rule before you answer.
 
 ## Writing rules
@@ -85,3 +87,5 @@ Keep commentary outside the code block to a few lines per item.
 3. `references/tuning-checklist.md`: pre submit review for performance and false positives.
 4. `examples/`: complete, commented rules for each rule shape (single event, sequence, absence, data table).
 5. `scripts/lint_rule.py`: offline structural lint. Catches section order, bad event types, type mismatches, missing joins, unaggregated outcomes. It does not replace the SecOps compiler.
+6. `fixtures/`: sanitized sample events and their UDM output, grouped by log type, each tied to a rule and an expected result.
+7. `scripts/check_fixtures.py`: checks that a rule's fields exist in a fixture and its literal values match, and flags unsanitized data. It is not a rule engine.
